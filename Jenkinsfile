@@ -30,32 +30,48 @@ pipeline{
 
             steps
             {
-               script{
-                   
+               script
+                {
                    mvnTest()
                }
             }
         }
-         stage('Integration Test maven'){
+         stage('Integration Test maven')
+        {
          when { expression {  params.action == 'create' } }
-            steps{
-               script{
-                   
+            steps
+             {
+               script
+                {
                    mvnIntegrationTest()
                }
             }
         }
 
 
-        stage('Maven Build : maven'){
+        stage('Maven Build : maven')
+        {
          when { expression {  params.action == 'create' } }
-            steps{
-               script{
-                   
+            steps
+            {
+               script
+                {
                    mvnBuild()
                }
             }
         }
-     
+        
+        stage('Quality Gate Status Check : Sonarqube')
+        {
+         when { expression {  params.action == 'create' } }
+            steps
+            {
+               script
+                {
+                   def SonarQubecredentialsId = 'sonar-server'
+                   statiCodeAnalysis(SonarQubecredentialsId)
+               }
+            }
+        }
     }
 }
