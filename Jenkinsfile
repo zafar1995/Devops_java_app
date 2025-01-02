@@ -68,7 +68,7 @@ pipeline{
             {
                script
                 {
-                   def SonarQubecredentialsId = 'sonar-server'
+                   def SonarQubecredentialsId = 'sonar-token'
                    statiCodeAnalysis(SonarQubecredentialsId)
                }
             }
