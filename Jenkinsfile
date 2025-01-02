@@ -3,23 +3,33 @@
 pipeline{
 
     agent any
+    parameters
+    {
+
+        choice(name: 'action', choices: 'create\ndelete', description: 'Choose create/Destroy')
+
+    }
 
     stages{
          
-        stage('Git Checkout'){
-                    // when { expression {  params.action == 'create' } }
-            steps{
-            gitCheckout(
+        stage('Git Checkout')
+        {
+            when { expression {  params.action == 'create' } }
+            steps
+            {
+                gitCheckout(
                 branch: "main",
                 url: "https://github.com/zafar1995/Devops_java_app.git"
             )
             }
         }
-         stage('Unit Test maven'){
          
-         // when { expression {  params.action == 'create' } }
+        stage('Unit Test maven')
+        {
+         when { expression {  params.action == 'create' } }
 
-            steps{
+            steps
+            {
                script{
                    
                    mvnTest()
@@ -27,7 +37,7 @@ pipeline{
             }
         }
          stage('Integration Test maven'){
-         // when { expression {  params.action == 'create' } }
+         when { expression {  params.action == 'create' } }
             steps{
                script{
                    
@@ -38,7 +48,7 @@ pipeline{
 
 
         stage('Maven Build : maven'){
-         // when { expression {  params.action == 'create' } }
+         when { expression {  params.action == 'create' } }
             steps{
                script{
                    
